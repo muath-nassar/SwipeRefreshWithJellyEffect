@@ -81,8 +81,8 @@ public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRef
         switch (newState) {
             case STATE_REFRESHING:
                 if (mLoadingView != null) {
-                    ((TextView)mLoadingView).setText("Loading Content");
-                    mLoadingView.setVisibility(VISIBLE);
+                    //((TextView)mLoadingView).setText("Loading Content");
+                    //mLoadingView.setVisibility(VISIBLE);
                     mJellyLayout.setDrawingState(JellyLayout.DrawingState.LOADING_STATE);
                     Log.d(TAG, "STATE_REFRESHING");
                 }
@@ -100,15 +100,15 @@ public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRef
             case STATE_DRAGGING:{
                 mJellyLayout.setSpeed(0);
                 Log.d(TAG, "STATE_DRAGGING");
-                ((TextView)mLoadingView).setText("Scroll Down");
-                mLoadingView.setVisibility(VISIBLE);
+                //((TextView)mLoadingView).setText("Scroll Down");
+                //mLoadingView.setVisibility(VISIBLE);
                 mJellyLayout.setWaveAnimation(mJellyLayout.createAnimator()) ;
                 Objects.requireNonNull(mJellyLayout.getWaveAnimation()).start();
                 break;
             }
             case STATE_IDLE:{
-                ((TextView)mLoadingView).setText("Scroll Down");
-                mLoadingView.setVisibility(VISIBLE);
+                //((TextView)mLoadingView).setText("Scroll Down");
+                //mLoadingView.setVisibility(VISIBLE);
                 Objects.requireNonNull(mJellyLayout.getWaveAnimation()).cancel();
                 Log.d(TAG, "STATE_IDLE");
 
@@ -119,8 +119,8 @@ public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRef
             }
             case STATE_RELEASING:
                 if (mLoadingView != null) {
-                    ((TextView)mLoadingView).setText("Scroll Down");
-                    mLoadingView.setVisibility(INVISIBLE);
+                    //((TextView)mLoadingView).setText("Scroll Down");
+                    //mLoadingView.setVisibility(INVISIBLE);
                     Log.d(TAG, "STATE_RELEASING");
 
                 }

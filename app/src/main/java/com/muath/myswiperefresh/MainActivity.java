@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         View loadingView = LayoutInflater.from(this).inflate(R.layout.view_loading, null);
         mJellyLayout.setLoadingView(loadingView);
         //for mahmoud
-        ImageView img = findViewById(R.id.image);
     }
 
     @Override

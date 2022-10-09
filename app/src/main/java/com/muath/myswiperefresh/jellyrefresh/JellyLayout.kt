@@ -41,6 +41,9 @@ internal class JellyLayout @JvmOverloads constructor(
     private var speed = 0f
     private var mPaint: Paint? = null
     private var mPath: Path? = null
+    private var mTextPath = Path()
+    private var mTextPaint = Paint()
+
 
     @ColorInt
     private var mColor = Color.GRAY
@@ -58,6 +61,10 @@ internal class JellyLayout @JvmOverloads constructor(
         wavePaint.color = Color.GREEN
         mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         mPaint!!.style = Paint.Style.FILL
+        mTextPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        mTextPaint.color = Color.WHITE
+        mTextPaint.textAlign = Paint.Align.CENTER
+        mTextPaint.textSize = 40f
         waveAnimation = createAnimator()
         mPath = Path()
         mDrawingState = DrawingState.PULLING_STATE
@@ -66,6 +73,7 @@ internal class JellyLayout @JvmOverloads constructor(
                 if (mPath!!.isConvex) outline.setConvexPath(mPath!!)
             }
         }
+
     }
 
     fun setColor(color: Int) {
@@ -85,10 +93,14 @@ internal class JellyLayout @JvmOverloads constructor(
             //mPath = mPath!!.minus(pathWave!!)
             //canvas.drawPath(mPath!!, mPaint!!)
             canvas.drawPath(pathWave!!, mPaint!!)
+            canvas.drawText("Loading",width/2f,mHeaderHeight/2,mTextPaint)
+
 
         } else {
             drawPulling(canvas)
             canvas.drawPath(mPath!!, mPaint!!)
+            canvas.drawText("Scroll Down ",width/2f,mHeaderHeight/2,mTextPaint)
+
         }
     }
 
