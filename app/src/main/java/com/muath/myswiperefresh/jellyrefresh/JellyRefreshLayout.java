@@ -89,9 +89,7 @@ public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRef
                 break;
             case STATE_REFRESHING_SETTLING:
                 if (mLoadingView != null) {
-                    ((TextView)mLoadingView).setText("Loading Content");
-                    mLoadingView.setVisibility(VISIBLE);
-                    //mJellyLayout.createAnimator().start();
+                    mJellyLayout.setDrawingState(JellyLayout.DrawingState.LOADING_STATE);
                     Log.d(TAG, "STATE_REFRESHING_SETTLING");
 
 
@@ -116,7 +114,9 @@ public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRef
 
                 break;
             }
-            case STATE_SETTLING:
+            case STATE_SETTLING:{
+                break;
+            }
             case STATE_RELEASING:
                 if (mLoadingView != null) {
                     ((TextView)mLoadingView).setText("Scroll Down");

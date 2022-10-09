@@ -80,10 +80,10 @@ internal class JellyLayout @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        createWave()
         if (mDrawingState == DrawingState.LOADING_STATE) {
-            createWave()
             //mPath = mPath!!.minus(pathWave!!)
-            canvas.drawPath(mPath!!, mPaint!!)
+            //canvas.drawPath(mPath!!, mPaint!!)
             canvas.drawPath(pathWave!!, mPaint!!)
 
         } else {
@@ -110,7 +110,8 @@ internal class JellyLayout @JvmOverloads constructor(
 
     private fun createWave() {
         pathWave!!.reset()
-        pathWave!!.moveTo(0f, mHeaderHeight)
+        pathWave!!.moveTo(0f,0f)
+        pathWave!!.lineTo(0f, mHeaderHeight)
         pathWave!!.lineTo(0f, amplitude)
         pathWave!!.lineTo(0f, amplitude - 10)
         var i = 0
@@ -121,7 +122,7 @@ internal class JellyLayout @JvmOverloads constructor(
             pathWave!!.lineTo(wx, wy)
             i += 10
         }
-        pathWave!!.lineTo(width.toFloat(), mHeaderHeight)
+        pathWave!!.lineTo(width.toFloat(), 0f)
         pathWave!!.close()
     }
 

@@ -317,7 +317,6 @@ public class PullToRefreshLayout extends FrameLayout {
             if (!isRefreshing()) return;
             if (mChildView != null) {
                 mChildView.animate().translationY(0)
-                        .setListener(null)
                         .setListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animator) {
