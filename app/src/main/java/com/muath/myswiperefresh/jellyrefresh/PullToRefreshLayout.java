@@ -39,6 +39,7 @@ public class PullToRefreshLayout extends FrameLayout {
     @interface State {
     }
 
+    float mTranslationY = 0;
     private float mTouchStartY;
     private float mCurrentY;
     private View mChildView;
@@ -204,7 +205,8 @@ public class PullToRefreshLayout extends FrameLayout {
                         mCurrentY - mTouchStartY);
                 if (mChildView != null) {
                     float offsetY = decelerateInterpolator.getInterpolation(dy / mPullHeight / 2) * dy / 2;
-                    mChildView.setTranslationY(offsetY);
+                    //mChildView.setTranslationY(offsetY);
+                    mTranslationY = offsetY;
                     if (mPullToRefreshPullingListener != null) {
                         mPullToRefreshPullingListener.onTranslationYChanged(offsetY);
                         mPullToRefreshPullingListener.onPulling(offsetY / mHeaderHeight, currentX);
@@ -214,8 +216,8 @@ public class PullToRefreshLayout extends FrameLayout {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 if (mChildView != null) {
-                    if (mChildView.getTranslationY() >= mTriggerHeight) {
-                        mChildView.animate().translationY(mHeaderHeight)
+                    if (/*mChildView.getTranslationY()*/mTranslationY >= mTriggerHeight) {
+                        mChildView.animate().translationY(0)
                                 .setListener(new Animator.AnimatorListener() {
                                     @Override
                                     public void onAnimationStart(Animator animator) {

@@ -7,4 +7,5 @@
     android:text="Loading..."
     android:paddingTop="30dp"
     android:textColor="@android:color/white"
+    android:elevation="40dp"
     android:textSize="20sp" />

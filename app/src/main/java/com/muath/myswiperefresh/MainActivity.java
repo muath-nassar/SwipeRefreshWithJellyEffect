@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
                 .postDelayed(() -> mJellyLayout.setRefreshing(false), 3000));
         View loadingView = LayoutInflater.from(this).inflate(R.layout.view_loading, null);
         mJellyLayout.setLoadingView(loadingView);
+        //for mahmoud
+        ImageView img = findViewById(R.id.image);
     }
 
     @Override

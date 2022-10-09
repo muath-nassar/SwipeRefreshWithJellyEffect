@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,12 @@ import androidx.annotation.Nullable;
 
 import com.muath.myswiperefresh.R;
 
+import java.util.Objects;
+
 public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRefreshLayout.PullToRefreshPullingListener {
 
+
+    private static final String TAG = "JellyRefreshLayout";
     private JellyLayout mJellyLayout;
     private View mLoadingView;
 
@@ -55,6 +60,8 @@ public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRef
     public void setRefreshing(boolean refreshing) {
         if (refreshing) {
             post(() -> mJellyLayout.setPointX(mJellyLayout.getWidth() / 2));
+        }else {
+            mJellyLayout.setDrawingState(JellyLayout.DrawingState.PULLING_STATE);
         }
         super.setRefreshing(refreshing);
     }
@@ -76,23 +83,45 @@ public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRef
                 if (mLoadingView != null) {
                     ((TextView)mLoadingView).setText("Loading Content");
                     mLoadingView.setVisibility(VISIBLE);
+                    mJellyLayout.setDrawingState(JellyLayout.DrawingState.LOADING_STATE);
+                    Log.d(TAG, "STATE_REFRESHING");
                 }
                 break;
             case STATE_REFRESHING_SETTLING:
                 if (mLoadingView != null) {
                     ((TextView)mLoadingView).setText("Loading Content");
                     mLoadingView.setVisibility(VISIBLE);
+                    //mJellyLayout.createAnimator().start();
+                    Log.d(TAG, "STATE_REFRESHING_SETTLING");
+
+
                     //mLoadingView.setTranslationY(mPullHeight);
                     //mLoadingView.animate().translationY(0).setDuration(1).start();
                 }
                 break;
-            case STATE_DRAGGING:
-            case STATE_IDLE:
+            case STATE_DRAGGING:{
+                mJellyLayout.setSpeed(0);
+                Log.d(TAG, "STATE_DRAGGING");
+                ((TextView)mLoadingView).setText("Scroll Down");
+                mLoadingView.setVisibility(VISIBLE);
+                mJellyLayout.setWaveAnimation(mJellyLayout.createAnimator()) ;
+                Objects.requireNonNull(mJellyLayout.getWaveAnimation()).start();
+                break;
+            }
+            case STATE_IDLE:{
+                ((TextView)mLoadingView).setText("Scroll Down");
+                mLoadingView.setVisibility(VISIBLE);
+                Objects.requireNonNull(mJellyLayout.getWaveAnimation()).cancel();
+                Log.d(TAG, "STATE_IDLE");
+
+                break;
+            }
             case STATE_SETTLING:
             case STATE_RELEASING:
                 if (mLoadingView != null) {
                     ((TextView)mLoadingView).setText("Scroll Down");
-                    mLoadingView.setVisibility(VISIBLE);
+                    mLoadingView.setVisibility(INVISIBLE);
+                    Log.d(TAG, "STATE_RELEASING");
 
                 }
                 break;
@@ -145,5 +174,11 @@ public class JellyRefreshLayout extends PullToRefreshLayout implements PullToRef
         mJellyLayout.addView(view, params);
         view.setVisibility(INVISIBLE);
         mLoadingView = view;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mJellyLayout.setSpeed(0);
     }
 }
